@@ -7,8 +7,8 @@ start_time = time.clock()
 
 MIN_MATCH_COUNT = 10
 
-img1 = cv2.imread('front.bmp',0) # queryImage
-img2 = cv2.imread('rear.bmp',0)  # trainImage
+img1 = cv2.imread('left.png')  # queryImage
+img2 = cv2.imread('right.png') # trainImage
 
 # Initiate SIFT detector
 sift = cv2.SIFT()
