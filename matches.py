@@ -5,6 +5,11 @@ import time
 
 start_time = time.clock()
 
+# These three parameters can be changed independently
+FEATURE_DETECTOR = 'SIFT'
+DESCRIPTOR = 'SIFT'
+MATCH_METHOD = 'FlannBased'
+
 MIN_MATCH_COUNT = 10
 
 img1 = cv2.imread('left.png')  # queryImage
@@ -17,7 +22,7 @@ img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
 print "loaded images after", time.clock() - start_time, "seconds"
 
 # Initiate feature detector
-fd = cv2.FeatureDetector_create('SIFT')
+fd = cv2.FeatureDetector_create(FEATURE_DETECTOR)
 
 print "initialised detector after", time.clock() - start_time, "seconds"
 
@@ -27,7 +32,7 @@ kp2 = fd.detect(img2)
 print "detect features after", time.clock() - start_time, "seconds"
 
 # Initiate feature descriptor
-de = cv2.DescriptorExtractor_create('SIFT')
+de = cv2.DescriptorExtractor_create(DESCRIPTOR)
 
 print "initialised descriptor extractor after", time.clock() - start_time, "seconds"
 
@@ -35,7 +40,7 @@ kp1, des1 = de.compute(img1,kp1)
 kp2, des2 = de.compute(img2,kp2)
 
 # Initiate descriptor matcher
-dm = cv2.DescriptorMatcher_create('FlannBased')
+dm = cv2.DescriptorMatcher_create(MATCH_METHOD)
 
 print "initialised descriptor matcher after", time.clock() - start_time, "seconds"
 
