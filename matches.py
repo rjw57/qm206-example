@@ -10,6 +10,10 @@ MIN_MATCH_COUNT = 10
 img1 = cv2.imread('left.png')  # queryImage
 img2 = cv2.imread('right.png') # trainImage
 
+# convert img1/img2 to greyscale
+img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
+img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
+
 # Initiate SIFT detector
 sift = cv2.SIFT()
 
