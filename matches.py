@@ -16,22 +16,30 @@ img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
 
 print "loaded images after", time.clock() - start_time, "seconds"
 
-# Initiate SIFT detector
-sift = cv2.SIFT()
+# Initiate feature detector
+fd = cv2.FeatureDetector_create('SIFT')
 
-# find the keypoints and descriptors with SIFT
-kp1, des1 = sift.detectAndCompute(img1,None)
-kp2, des2 = sift.detectAndCompute(img2,None)
+print "initialised detector after", time.clock() - start_time, "seconds"
+
+kp1 = fd.detect(img1)
+kp2 = fd.detect(img2)
 
 print "detect features after", time.clock() - start_time, "seconds"
 
-FLANN_INDEX_KDTREE = 0
-index_params = dict(algorithm = FLANN_INDEX_KDTREE, trees = 5)
-search_params = dict(checks = 50)
+# Initiate feature descriptor
+de = cv2.DescriptorExtractor_create('SIFT')
 
-flann = cv2.FlannBasedMatcher(index_params, search_params)
+print "initialised descriptor extractor after", time.clock() - start_time, "seconds"
 
-matches = flann.knnMatch(des1,des2,k=2)
+kp1, des1 = de.compute(img1,kp1)
+kp2, des2 = de.compute(img2,kp2)
+
+# Initiate descriptor matcher
+dm = cv2.DescriptorMatcher_create('FlannBased')
+
+print "initialised descriptor matcher after", time.clock() - start_time, "seconds"
+
+matches = dm.knnMatch(des1, des2, k=2)
 
 print "found matches after", time.clock() - start_time, "seconds"
 
